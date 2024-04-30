@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: spring-boot-k8s
-          image: sanaeabahcine371/devops-integration:5
+          image: sanaeabahcine371/devops-integration:6
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
