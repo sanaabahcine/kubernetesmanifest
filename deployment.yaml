@@ -1,38 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
-  labels:
-    app: flaskdemo
-  name: flaskdemo
+  name: spring-boot-k8s-deployment
 spec:
-  replicas: 3
   selector:
     matchLabels:
-      app: flaskdemo
-  strategy: {}
+      app: spring-boot-k8s
+  replicas: 2
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        app: flaskdemo
+        app: spring-boot-k8s
     spec:
       containers:
-      - image: raj80dockerid/test:6
-        name: flaskdemo
-        resources: {}
-status: {}
+        - name: spring-boot-k8s
+          image: sanaeabahcine371/devops-integration:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
-  name: lb-service
-  labels:
-    app: lb-service
+  name: springboot-k8ssvc
 spec:
-  type: LoadBalancer
-  ports:
-  - port: 80
-    targetPort: 5000
   selector:
-    app: flaskdemo
+    app: spring-boot-k8s
+  ports:
+    - protocol: "TCP"
+      port: 8080
+      targetPort: 8080
+  type: NodePort
